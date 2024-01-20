@@ -8,11 +8,11 @@ class HTTPSRequest
 {
     public static function fetch(array $options = []): string
     {
-        self::validate_options($options) or throw new HTTPSException('Invalid options provided.');
+        $options = self::validate_options($options) or throw new HTTPSException('Invalid options provided.');
         return self::curl($options);
     }
 
-    private static function validate_options(array $options): bool
+    private static function validate_options(array $options): array
     {
         if (!isset($options['url']) || !filter_var($options['url'], FILTER_VALIDATE_URL)) {
             throw new HTTPSException('Invalid or no URL provided.');
@@ -41,7 +41,7 @@ class HTTPSRequest
             $options['verify'] = true;
         }
 
-        return true;
+        return $options;
     }
 
     private static function curl(array $options): string
