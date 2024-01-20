@@ -1,0 +1,18 @@
+{
+    "name": "rpurinton/https",
+    "description": "Abstract Class for HTTPS using Magic Methods (PHP/Composer)",
+    "type": "library",
+    "license": "MIT",
+    "autoload": {
+        "psr-4": {
+            "Rpurinton\\Https\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "Russell Purinton",
+            "email": "russell.purinton@gmail.com"
+        }
+    ],
+    "require": {}
+}
