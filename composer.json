@@ -14,5 +14,6 @@
             "email": "russell.purinton@gmail.com"
         }
     ],
-    "require": {}
+    "require": {},
+    "version": "1.0.0"
 }
