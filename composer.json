@@ -1,6 +1,6 @@
 {
     "name": "rpurinton/https",
-    "description": "Abstract Class for HTTPS using Magic Methods (PHP/Composer)",
+    "description": "Abstract Static Class for making HTTPS Requests in PHP/Composer",
     "type": "library",
     "license": "MIT",
     "autoload": {

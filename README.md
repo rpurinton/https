@@ -1,6 +1,6 @@
 # rpurinton/https
 
-Abstract Class for HTTPS using Magic Methods (PHP/Composer)
+Abstract Static Class for making HTTPS Requests in PHP/Composer
 
 # Usage
 
