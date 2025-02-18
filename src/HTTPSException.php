@@ -1,6 +1,6 @@
 <?php
 
-namespace RPurinton\HTTPS\Exceptions;
+namespace RPurinton;
 
 use Exception;
 
