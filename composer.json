@@ -8,6 +8,10 @@
             "RPurinton\\": "src/"
         }
     },
+    "require": {
+        "php": "^8.0",
+        "ext-curl": "*"
+    },
     "authors": [
         {
             "name": "Russell Purinton",
