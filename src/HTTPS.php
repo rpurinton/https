@@ -2,8 +2,36 @@
 
 namespace RPurinton;
 
+/**
+ * Class HTTPS
+ *
+ * Provides a simple HTTP client based on cURL.
+ *
+ * @package RPurinton
+ */
 class HTTPS
 {
+    /**
+     * Sends an HTTP request using cURL.
+     *
+     * This method validates the options provided, merges them with defaults, 
+     * and then executes the request using the curl() method.
+     *
+     * @param array $options {
+     *     @type string  $url             The URL to request.
+     *     @type string  $method          HTTP method ('GET', 'POST', 'PUT', etc.). Defaults to 'GET'.
+     *     @type array   $headers         An array of headers. Can be associative or indexed array.
+     *     @type string  $body            The request body.
+     *     @type int     $timeout         Maximum time in seconds for the cURL execution. Defaults to 10.
+     *     @type int     $connect_timeout Maximum time in seconds to wait for connection. Defaults to 5.
+     *     @type bool    $verify          Whether to verify SSL certificates. Defaults to true.
+     *     @type int     $retries         Number of retry attempts on cURL errors. Defaults to 0.
+     * }
+     *
+     * @return string The response from the HTTP request.
+     *
+     * @throws HTTPSException If the cURL extension is not loaded or if any errors occur during the request.
+     */
     public static function request(array $options = []): string
     {
         if (!extension_loaded('curl')) {
@@ -13,6 +41,11 @@ class HTTPS
         return self::curl($options);
     }
 
+    /**
+     * Returns the default options for an HTTP request.
+     *
+     * @return array The default options array.
+     */
     private static function default_options(): array
     {
         return [
@@ -26,6 +59,19 @@ class HTTPS
         ];
     }
 
+    /**
+     * Validates and normalizes the options for an HTTP request.
+     *
+     * This method merges user-provided options with the default values,
+     * validates the URL, HTTP method, headers, body, timeout settings,
+     * verify flag, and retries. It will throw an HTTPSException for invalid input.
+     *
+     * @param array $options The options to validate.
+     *
+     * @return array The validated and normalized options.
+     *
+     * @throws HTTPSException If the URL is missing/invalid or if headers/body are not in the expected format.
+     */
     private static function validate_options(array $options): array
     {
         $defaults = self::default_options();
@@ -94,6 +140,19 @@ class HTTPS
         return $options;
     }
 
+    /**
+     * Executes an HTTP request using cURL.
+     *
+     * This method sets up and executes the cURL request based on the validated options.
+     * It supports retrying the request a specified number of times if a cURL error occurs.
+     *
+     * @param array $options The validated options for the HTTP request.
+     *
+     * @return string The response from the HTTP request.
+     *
+     * @throws HTTPSException If cURL fails to initialize, if cURL returns an error after retries,
+     *                        or if an HTTP error status code (>=400) is received.
+     */
     private static function curl(array $options): string
     {
         $attempts = 0;
