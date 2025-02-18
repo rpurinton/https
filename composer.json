@@ -5,7 +5,7 @@
     "license": "MIT",
     "autoload": {
         "psr-4": {
-            "RPurinton\\HTTPS\\": "src/"
+            "RPurinton\\": "src/"
         }
     },
     "authors": [

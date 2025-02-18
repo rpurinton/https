@@ -1,12 +1,10 @@
 <?php
 
-namespace RPurinton\HTTPS;
+namespace RPurinton;
 
-use RPurinton\HTTPS\Exceptions\HTTPSException;
-
-class HTTPSRequest
+class HTTPS
 {
-    public static function fetch(array $options = []): string
+    public static function request(array $options = []): string
     {
         $options = self::validate_options($options) or throw new HTTPSException('Invalid options provided.');
         return self::curl($options);

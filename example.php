@@ -2,7 +2,7 @@
 
 require_once __DIR__ . '/vendor/autoload.php';
 
-use RPurinton\HTTPS\HTTPSRequest;
+use RPurinton\HTTPS;
 
 // Define the options for the request
 $options = [
@@ -16,7 +16,7 @@ $options = [
 ];
 
 // Return the response as a string
-$response_string = HTTPSRequest::fetch($options);
+$response_string = HTTPS::request($options);
 echo "Response as String: $response_string\n";
 
 $response_array = json_decode($response_string, true);
