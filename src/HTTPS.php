@@ -214,6 +214,8 @@ class HTTPS
                 CURLOPT_SSL_VERIFYPEER => $options['verify'],
             ]);
             return curl_exec($curl);
+        } catch (\Exception $e) {
+            throw new HTTPSException($e->getMessage());
         } finally {
             curl_close($curl);
         }
