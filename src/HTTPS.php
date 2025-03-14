@@ -236,6 +236,10 @@ class HTTPS
                     throw new HTTPSException($lastError, $httpCode);
                 }
                 return $response;
+            } catch (\Throwable $e) {
+                error_log('cURL error: ' . $e->getMessage());
+                $attempts++;
+                usleep(100000); // 100ms
             } finally {
                 curl_close($curl);
             }
