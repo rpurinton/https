@@ -233,11 +233,9 @@ class HTTPS
 
                 $httpCode = curl_getinfo($curl, CURLINFO_HTTP_CODE);
                 if ($httpCode >= 400) {
-                    $lastError = 'HTTP error on ' . $options['method'] . ' ' . $options['url'] . ': Received status code ' . $httpCode;
-                    error_log($lastError);
-                    throw new HTTPSException($lastError);
+                    $lastError = 'HTTP error on ' . $options['method'] . ' ' . $options['url'] . ': Received status code ' . $httpCode . ' Response: ' . $response;
+                    throw new HTTPSException($lastError, $httpCode);
                 }
-
                 return $response;
             } finally {
                 curl_close($curl);
