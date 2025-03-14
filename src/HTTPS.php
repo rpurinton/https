@@ -196,54 +196,26 @@ class HTTPS
      */
     private static function curl(array $options): string
     {
-        $attempts = 0;
-        $maxAttempts = 1 + $options['retries'];
-        $lastError = '';
-        while ($attempts < $maxAttempts) {
-            $curl = curl_init();
-            if ($curl === false) {
-                throw new HTTPSException('Failed to initialize cURL.');
-            }
-
-            try {
-                curl_setopt_array($curl, [
-                    CURLOPT_URL => $options['url'],
-                    CURLOPT_RETURNTRANSFER => true,
-                    CURLOPT_ENCODING => '',
-                    CURLOPT_MAXREDIRS => 10,
-                    CURLOPT_TIMEOUT => $options['timeout'],
-                    CURLOPT_CONNECTTIMEOUT => $options['connect_timeout'],
-                    CURLOPT_FOLLOWLOCATION => true,
-                    CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
-                    CURLOPT_CUSTOMREQUEST => $options['method'],
-                    CURLOPT_POSTFIELDS => $options['body'],
-                    CURLOPT_HTTPHEADER => $options['headers'],
-                    CURLOPT_SSL_VERIFYHOST => $options['verify'] ? 2 : 0,
-                    CURLOPT_SSL_VERIFYPEER => $options['verify'],
-                ]);
-
-                $response = curl_exec($curl);
-                if ($response === false) {
-                    $lastError = 'cURL exec: ' . curl_error($curl);
-                    $attempts++;
-                    usleep(100000); // 100ms
-                    continue;
-                }
-
-                $httpCode = curl_getinfo($curl, CURLINFO_HTTP_CODE);
-                if ($httpCode >= 400) {
-                    $lastError = 'HTTP error on ' . $options['method'] . ' ' . $options['url'] . ': Received status code ' . $httpCode . ' Response: ' . $response;
-                    throw new HTTPSException($lastError, $httpCode);
-                }
-                return $response;
-            } catch (\Throwable $e) {
-                $lastError = 'cURL error: ' . $e->getMessage() . ' (' . $e->getCode() . ')';
-                $attempts++;
-                usleep(100000); // 100ms
-            } finally {
-                curl_close($curl);
-            }
+        $curl = curl_init();
+        try {
+            curl_setopt_array($curl, [
+                CURLOPT_URL => $options['url'],
+                CURLOPT_RETURNTRANSFER => true,
+                CURLOPT_ENCODING => '',
+                CURLOPT_MAXREDIRS => 10,
+                CURLOPT_TIMEOUT => $options['timeout'],
+                CURLOPT_CONNECTTIMEOUT => $options['connect_timeout'],
+                CURLOPT_FOLLOWLOCATION => true,
+                CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+                CURLOPT_CUSTOMREQUEST => $options['method'],
+                CURLOPT_POSTFIELDS => $options['body'],
+                CURLOPT_HTTPHEADER => $options['headers'],
+                CURLOPT_SSL_VERIFYHOST => $options['verify'] ? 2 : 0,
+                CURLOPT_SSL_VERIFYPEER => $options['verify'],
+            ]);
+            return curl_exec($curl);
+        } finally {
+            curl_close($curl);
         }
-        throw new HTTPSException($lastError ?: 'Unknown error occurred during cURL execution.');
     }
 }
