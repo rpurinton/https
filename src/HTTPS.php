@@ -225,8 +225,6 @@ class HTTPS
 
                 $response = curl_exec($curl);
                 if ($response === false) {
-                    $lastError = 'cURL error on ' . $options['method'] . ' ' . $options['url'] . ': ' . curl_error($curl);
-                    error_log($lastError);
                     $attempts++;
                     continue;
                 }
