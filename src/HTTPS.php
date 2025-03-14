@@ -220,7 +220,6 @@ class HTTPS
                     CURLOPT_HTTPHEADER => $options['headers'],
                     CURLOPT_SSL_VERIFYHOST => $options['verify'] ? 2 : 0,
                     CURLOPT_SSL_VERIFYPEER => $options['verify'],
-                    CURLOPT_FAILONERROR => true,
                 ]);
 
                 $response = curl_exec($curl);
