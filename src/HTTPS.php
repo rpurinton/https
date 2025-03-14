@@ -225,7 +225,7 @@ class HTTPS
 
                 $response = curl_exec($curl);
                 if ($response === false) {
-                    $lastError = 'cURL error: ' . curl_error($curl);
+                    $lastError = 'cURL exec: ' . curl_error($curl);
                     $attempts++;
                     usleep(100000); // 100ms
                     continue;
@@ -238,8 +238,7 @@ class HTTPS
                 }
                 return $response;
             } catch (\Throwable $e) {
-                error_log('cURL error: ' . $e->getMessage());
-                $lastError = $e->getMessage();
+                $lastError = 'cURL error: ' . $e->getMessage() . ' (' . $e->getCode() . ')';
                 $attempts++;
                 usleep(100000); // 100ms
             } finally {
