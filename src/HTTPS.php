@@ -226,6 +226,7 @@ class HTTPS
                 $response = curl_exec($curl);
                 if ($response === false) {
                     $attempts++;
+                    usleep(100000); // 100ms
                     continue;
                 }
 
